@@ -1,0 +1,19 @@
+{
+  "name": "Api",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {},
+  "keywords": [
+    "api",
+    "blog",
+    "Technical Blog"
+  ],
+  "author": "Neetesh Kuchya",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "*",
+    "express": "*",
+    "mongoose": "^5.4.7"
+  }
+}
