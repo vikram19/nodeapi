@@ -6,7 +6,7 @@ const cors = require('cors');
 const database = 'mongodb://localhost:27017/mydb';
 
 const app = express();
-
+app.use(cors({credentials: true, origin: true})); 
 
 // Connect To Database
 mongoose.connect(database,{ useNewUrlParser: true });
@@ -28,7 +28,6 @@ mongoose.connection.on('error', (err)=>{
 // Set Static Folder
 app.use(express.static(path.join(__dirname,'public')));
 
-app.use(cors()); 
 
 app.listen(8080,function () {
     console.log("Server is listning on port" + 8080);
