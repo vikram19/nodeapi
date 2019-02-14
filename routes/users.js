@@ -1,12 +1,15 @@
-const User = require('./models/user');
+const User = require('../models/user');
 const express = require('express');
 const router = express.Router();
 
-router.get('/register',(req,res)=>{
+router.post('/register',(req,res)=>{
+    const uname = req.params.username;
+    const pass = req.params.password;
+    const name = req.params.name;
     var newUser = new User({
-        name: "namesds",
-        username: "username",
-        password: "bdvjchdsbjc"
+        name: name,
+        username: username,
+        password: pass
     });
     newUser.save(callback);
     function callback(err, user){
@@ -47,6 +50,29 @@ router.get('/AllUsersList',(req,res)=>{
             res.status(200).json({success: true, users: users});
         }
     }
+})
+
+router.post('/authenticate', (req,res)=>{
+    const uname = req.params.username;
+    const pass = req.params.password;
+
+    User.getUserByUsername(uname,(err,user) => {
+        if(err){
+            res.status(500).json({success: false, msg: err});
+        } else{
+            if(!user){
+                res.status(200).json({success: false, msg:"user not found"});
+            } else{
+                User.comparePassword(user.password,pass,(err,user) => {
+                    if(!user){
+                        res.status(200).json({success: false, msg:"Wrong Password"});
+                    } else{
+                        res.status(200).json({success: true, msg:"authenticated"});
+                    }
+                });
+            }
+        }
+    });
 })
 
 module.exports = router;
